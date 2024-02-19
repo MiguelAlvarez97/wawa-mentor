@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback onPressed; //para poder controlar la acción del botón
+  final String text;
 
-  const MyButton({super.key, required this.onPressed});
+  const MyButton({super.key, required this.onPressed, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +37,15 @@ class MyButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: onPressed, //pasamos el VoidCallBack
         style: ElevatedButton.styleFrom(
           fixedSize: const Size(395, 55),
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
         ),
-        child: const Text(
-          'Sign in',
-          style: TextStyle(
+        child: Text(
+          text,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 17,
             color: Colors.white,

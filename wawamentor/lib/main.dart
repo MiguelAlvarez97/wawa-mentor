@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wawamentor/bloc/auth_bloc.dart';
+import 'package:wawamentor/presentation/pages/curso.dart';
+import 'package:wawamentor/presentation/pages/home_page.dart';
 import 'package:wawamentor/presentation/pages/login_page.dart';
+import 'package:wawamentor/presentation/pages/metronomo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,18 +13,25 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'WawaMentor',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 17, 68, 145)),
-        //useMaterial3: true,
-      ),
-      home: LoginPage(),
+    return BlocProvider(
+      create: (context) => AuthBloc(),
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'WawaMentor',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color.fromARGB(255, 17, 68, 145)),
+            //useMaterial3: true,
+          ),
+          home: LoginPage(),
+          routes: {
+            '/LoginPage': (context) => LoginPage(),
+            '/HomePage': (context) => const HomePage(),
+            '/MetronomoPage': (context) => const MetronomoPage(),
+            '/CursosPage': (context) => CourseDetailsPage(),
+          }),
     );
   }
 }
