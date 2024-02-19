@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wawamentor/presentation/widgets/my_button.dart';
 // import 'package:audioplayers/audioplayers.dart';
 
-// void main() {
-//   runApp(MetronomeApp());
-// }
-
 class MetronomoPage extends StatefulWidget {
   const MetronomoPage({super.key});
 
