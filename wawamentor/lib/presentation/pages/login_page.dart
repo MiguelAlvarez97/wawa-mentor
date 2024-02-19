@@ -100,18 +100,28 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 //User name
-                MyTextField(
-                  controller: emailController,
-                  hintText: 'Email',
-                  obscureText: false,
+                Semantics(
+                  label: 'email',
+                  textField: true,
+                  enabled: true,
+                  child: MyTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    obscureText: false,
+                  ),
                 ),
 
                 const SizedBox(height: 10),
                 // Password
-                MyTextField(
-                  controller: passwordController,
-                  hintText: 'Contraseña',
-                  obscureText: true,
+                Semantics(
+                  label: 'password',
+                  textField: true,
+                  enabled: true,
+                  child: MyTextField(
+                    controller: passwordController,
+                    hintText: 'Contraseña',
+                    obscureText: true,
+                  ),
                 ),
                 // Forgot password
                 Padding(
@@ -128,15 +138,20 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 //sign in button
-                MyButton(
-                  onPressed: () {
-                    // aqui llamo a mi evento bloc authloginRequest
-                    context.read<AuthBloc>().add(AuthloginRequested(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                        ));
-                  },
-                  text: 'Iniciar Sesión',
+                Semantics(
+                  label: 'login',
+                  enabled: true,
+                  button: true,
+                  child: MyButton(
+                    onPressed: () {
+                      // aqui llamo a mi evento bloc authloginRequest
+                      context.read<AuthBloc>().add(AuthloginRequested(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                          ));
+                    },
+                    text: 'Iniciar Sesión',
+                  ),
                 ),
                 const SizedBox(height: 15),
                 //Registrarse
