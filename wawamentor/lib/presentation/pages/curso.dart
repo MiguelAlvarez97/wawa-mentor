@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wawamentor/presentation/widgets/my_button.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Course {
@@ -59,7 +60,9 @@ class CourseDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
+            MyButton(onPressed: () {}, text: 'Tomar Asistencia'),
+            const SizedBox(height: 10),
             YoutubePlayer(
               controller: _controller,
               showVideoProgressIndicator: true,

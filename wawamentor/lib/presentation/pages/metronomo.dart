@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wawamentor/presentation/widgets/my_button.dart';
-// import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class MetronomoPage extends StatefulWidget {
   const MetronomoPage({super.key});
@@ -12,12 +12,12 @@ class MetronomoPage extends StatefulWidget {
 class _MetronomePageState extends State<MetronomoPage> {
   bool _isPlaying = false;
   double _bpm = 120;
-  //AudioCache _audioCache;
+  late AudioCache _audioCache;
+  final player = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
-    //_audioCache = AudioCache(prefix: 'assets/sounds/');
   }
 
   void _toggleMetronome() {
@@ -31,14 +31,20 @@ class _MetronomePageState extends State<MetronomoPage> {
     });
   }
 
-  void _startMetronome() {
-    Duration interval = Duration(milliseconds: (60000 / _bpm).round());
+  void _startMetronome() async {
+    //AudioCache.instance = AudioCache(prefix: '');
+    //Duration interval = Duration(milliseconds: (60000 / _bpm).round());
     //_audioCache.loop('tick.wav', volume: 0.5);
+    //await player.play(AssetSource('lib/assets/sounds/tick.mp3'));
+    AudioCache.instance = AudioCache(prefix: '');
+    final player = AudioPlayer();
+    await player.play(AssetSource('lib/assets/sounds/tick.mp3'));
     setState(() {});
   }
 
-  void _stopMetronome() {
+  void _stopMetronome() async {
     //_audioCache.clearCache();
+    await player.stop();
     setState(() {});
   }
 
@@ -73,13 +79,9 @@ class _MetronomePageState extends State<MetronomoPage> {
               },
             ),
             const SizedBox(height: 20),
-            // RaisedButton(
-            //   onPressed: _toggleMetronome,
-            //   child: Text(_isPlaying ? 'Stop' : 'Start'),
-            // ),
             MyButton(
-              onPressed: () {},
-              text: 'Iniciar',
+              onPressed: _toggleMetronome,
+              text: _isPlaying ? 'Stop' : 'Start',
             )
           ],
         ),

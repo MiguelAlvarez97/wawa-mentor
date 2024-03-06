@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
+import 'package:wawamentor/presentation/widgets/my_button.dart';
 import 'package:wawamentor/presentation/widgets/square_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -96,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                   spacing: 20.0,
                   runSpacing: 20.0,
                   children: <Widget>[
+                    Container(),
                     // Panel de Cursos de Música
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2 -
@@ -126,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    // Panel de Actividad
+                    //Panel de Actividad
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2 - 30,
                       child: GestureDetector(
@@ -153,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ), // -30 para tener margen entre los paneles
                     ),
-                    // Panel de Actividad
+                    // // Panel de Actividad
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2 - 30,
                       child: GestureDetector(
@@ -162,11 +164,12 @@ class _HomePageState extends State<HomePage> {
                           elevation: 4,
                           child: Column(
                             children: <Widget>[
-                              Image.asset('lib/assets/coro.png'),
+                              Image.asset(
+                                  'lib/assets/ActividadesPendientes.png'),
                               const Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Text(
-                                  'Coro',
+                                  'Actividades Pendientes',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -182,13 +185,22 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            floatingActionButton: FloatingActionButton.large(
+            floatingActionButton:
+                // FloatingActionButton.large(
+                //   onPressed: () {
+                //     // Acción al presionar el botón
+                //     //Navigator.pop(context);
+                //     Navigator.pushNamed(context, '/MetronomoPage');
+                //   },
+                //   child: const Text('Metrónomo'),
+                // ),
+                MyButton(
               onPressed: () {
                 // Acción al presionar el botón
                 //Navigator.pop(context);
                 Navigator.pushNamed(context, '/MetronomoPage');
               },
-              child: const Text('Metrónomo'),
+              text: 'Metrónomo',
             ),
           );
         }
