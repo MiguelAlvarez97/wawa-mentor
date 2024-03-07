@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
                 seedColor: const Color.fromARGB(255, 17, 68, 145)),
             //useMaterial3: true,
           ),
-          home: const MetronomoPage(),
+          home: LoginPage(),
           routes: {
             '/LoginPage': (context) => LoginPage(),
             '/HomePage': (context) => const HomePage(),

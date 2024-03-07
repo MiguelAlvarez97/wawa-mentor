@@ -37,7 +37,7 @@ class MetronomePageState extends State<MetronomoPage> {
       await player.play(AssetSource('lib/assets/sounds/tick.mp3'));
       await Future.delayed(Duration(milliseconds: (60000 / _bpm).round()));
       //print('bpm es igual a $_bpm  , calculo de duration $duracion');
-      //await player.dispose();
+      await player.dispose();
     }
 
     setState(() {});
@@ -49,40 +49,46 @@ class MetronomePageState extends State<MetronomoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Metrónomo',
-          style: TextStyle(color: Colors.grey[200]),
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) {
+        _isPlaying = false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Metrónomo',
+            style: TextStyle(color: Colors.grey[200]),
+          ),
+          backgroundColor: const Color.fromARGB(255, 17, 68, 145),
+          iconTheme: IconThemeData(color: Colors.grey[200]),
         ),
-        backgroundColor: const Color.fromARGB(255, 17, 68, 145),
-        iconTheme: IconThemeData(color: Colors.grey[200]),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'BPM: ${_bpm.round()}',
-              style: const TextStyle(fontSize: 20),
-            ),
-            Slider(
-              value: _bpm,
-              min: 40,
-              max: 360,
-              divisions: 20,
-              onChanged: (value) {
-                setState(() {
-                  _bpm = value;
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            MyButton(
-              onPressed: _toggleMetronome,
-              text: _isPlaying ? 'Stop' : 'Start',
-            )
-          ],
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'BPM: ${_bpm.round()}',
+                style: const TextStyle(fontSize: 30),
+              ),
+              Slider(
+                value: _bpm,
+                min: 40,
+                max: 240,
+                divisions: 20,
+                onChanged: (value) {
+                  setState(() {
+                    _bpm = value;
+                  });
+                },
+              ),
+              const SizedBox(height: 100),
+              MyButton(
+                onPressed: _toggleMetronome,
+                text: _isPlaying ? 'Detener' : 'Iniciar',
+              )
+            ],
+          ),
         ),
       ),
     );
