@@ -6,14 +6,12 @@ class MetronomoPage extends StatefulWidget {
   const MetronomoPage({super.key});
 
   @override
-  _MetronomePageState createState() => _MetronomePageState();
+  MetronomePageState createState() => MetronomePageState();
 }
 
-class _MetronomePageState extends State<MetronomoPage> {
+class MetronomePageState extends State<MetronomoPage> {
   bool _isPlaying = false;
   double _bpm = 120;
-  late AudioCache _audioCache;
-  final player = AudioPlayer();
 
   @override
   void initState() {
@@ -32,19 +30,20 @@ class _MetronomePageState extends State<MetronomoPage> {
   }
 
   void _startMetronome() async {
-    //AudioCache.instance = AudioCache(prefix: '');
-    //Duration interval = Duration(milliseconds: (60000 / _bpm).round());
-    //_audioCache.loop('tick.wav', volume: 0.5);
-    //await player.play(AssetSource('lib/assets/sounds/tick.mp3'));
     AudioCache.instance = AudioCache(prefix: '');
-    final player = AudioPlayer();
-    await player.play(AssetSource('lib/assets/sounds/tick.mp3'));
+
+    while (_isPlaying) {
+      final player = AudioPlayer();
+      await player.play(AssetSource('lib/assets/sounds/tick.mp3'));
+      await Future.delayed(Duration(milliseconds: (60000 / _bpm).round()));
+      //print('bpm es igual a $_bpm  , calculo de duration $duracion');
+      //await player.dispose();
+    }
+
     setState(() {});
   }
 
   void _stopMetronome() async {
-    //_audioCache.clearCache();
-    await player.stop();
     setState(() {});
   }
 
@@ -70,7 +69,7 @@ class _MetronomePageState extends State<MetronomoPage> {
             Slider(
               value: _bpm,
               min: 40,
-              max: 240,
+              max: 360,
               divisions: 20,
               onChanged: (value) {
                 setState(() {
