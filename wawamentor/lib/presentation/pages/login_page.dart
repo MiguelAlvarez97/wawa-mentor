@@ -5,16 +5,22 @@ import 'package:wawamentor/presentation/widgets/my_button.dart';
 import 'package:wawamentor/presentation/widgets/my_textfield.dart';
 import 'package:wawamentor/presentation/widgets/square_tile.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   // text editing controllers
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  // sign user in method
-  void signUserIn() {}
+  final List<String> roles = <String>['Estudiante', 'Maestro', 'Administrador'];
 
+  String dropdownValue = 'Estudiante';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +105,30 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 15),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200, //<-- SEE HERE
+                      borderRadius: BorderRadius.circular(5)),
+                  child: DropdownMenu<String>(
+                    initialSelection: roles.first,
+                    //expandedInsets: const EdgeInsets.symmetric(horizontal: 25),
+                    onSelected: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    dropdownMenuEntries:
+                        roles.map<DropdownMenuEntry<String>>((String value) {
+                      return DropdownMenuEntry<String>(
+                          value: value, label: value);
+                    }).toList(),
+                  ),
+                ),
+
+                const SizedBox(height: 15),
                 //User name
                 Semantics(
                   label: 'email',
@@ -146,6 +176,7 @@ class LoginPage extends StatelessWidget {
                     onPressed: () {
                       // aqui llamo a mi evento bloc authloginRequest
                       context.read<AuthBloc>().add(AuthloginRequested(
+                            rol: dropdownValue,
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),
                           ));

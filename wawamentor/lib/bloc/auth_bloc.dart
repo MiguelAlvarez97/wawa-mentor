@@ -10,6 +10,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthloginRequested>((event, emit) async {
       emit(AuthLoading());
       try {
+        final rol = event.rol;
         final email = event.email;
         final password = event.password;
         final validacionEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -22,7 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             return emit(AuthFailure('Contraseña Incorrecta'));
           }
           await Future.delayed(const Duration(seconds: 1), () {
-            return emit(AuthSucces(uid: email));
+            return emit(AuthSucces(uid: email + rol));
           });
         }
       } catch (e) {
