@@ -6,9 +6,9 @@ sealed class AuthState {}
 final class AuthInitial extends AuthState {}
 
 final class AuthSucces extends AuthState {
-  final String uid; //userModel
+  final List<CursosModel> cursos;
 
-  AuthSucces({required this.uid});
+  AuthSucces({required this.cursos}); //userModel
 }
 
 final class AuthFailure extends AuthState {

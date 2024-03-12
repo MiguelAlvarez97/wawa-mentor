@@ -16,7 +16,11 @@ class LoginCursosEstudianteDataProvider {
           'password': password,
         }),
       );
-      return res.body;
+      if (res.statusCode != 200) {
+        throw res.body;
+      } else {
+        return res.body;
+      }
     } catch (e) {
       throw e.toString();
     }

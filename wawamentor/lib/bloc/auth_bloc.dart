@@ -36,7 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final validacionEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
       //validación de email
       if (!validacionEmail.hasMatch(email)) {
-        return emit(AuthFailure('El email ingresado es incorrecto'));
+        emit(AuthFailure('El email ingresado es incorrecto'));
       } else {
         //logica de la API de validacion aquí
         if (rol == 'Estudiante') {
@@ -50,7 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       }
     } catch (e) {
-      return emit(AuthFailure(e.toString()));
+      emit(AuthFailure(e.toString()));
     }
   }
 }
