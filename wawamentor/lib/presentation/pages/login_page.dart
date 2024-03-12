@@ -107,52 +107,56 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 15),
 
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                  width: 225,
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   decoration: BoxDecoration(
-                      color: Colors.grey.shade200, //<-- SEE HERE
-                      borderRadius: BorderRadius.circular(5)),
-                  child: DropdownMenu<String>(
-                    initialSelection: roles.first,
-                    //expandedInsets: const EdgeInsets.symmetric(horizontal: 25),
-                    onSelected: (String? value) {
-                      // This is called when the user selects an item.
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: DropdownButtonFormField<String>(
+                    style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontWeight: FontWeight.bold),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none, // Eliminar el borde del input
+                      contentPadding:
+                          EdgeInsets.zero, // Ajustar el relleno del contenido
+                    ),
+                    dropdownColor: Colors.grey.shade200,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    iconSize: 24,
+                    elevation: 16,
+                    onChanged: (String? newValue) {
                       setState(() {
-                        dropdownValue = value!;
+                        dropdownValue = newValue!;
                       });
                     },
-                    dropdownMenuEntries:
-                        roles.map<DropdownMenuEntry<String>>((String value) {
-                      return DropdownMenuEntry<String>(
-                          value: value, label: value);
+                    items: roles.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
                     }).toList(),
+                    value: dropdownValue,
                   ),
                 ),
 
                 const SizedBox(height: 15),
                 //User name
-                Semantics(
-                  label: 'email',
-                  textField: true,
-                  enabled: true,
-                  child: MyTextField(
-                    controller: emailController,
-                    hintText: 'Email',
-                    obscureText: false,
-                  ),
+                MyTextField(
+                  controller: emailController,
+                  hintText: 'Email',
+                  obscureText: false,
                 ),
 
                 const SizedBox(height: 10),
                 // Password
-                Semantics(
-                  label: 'password',
-                  textField: true,
-                  enabled: true,
-                  child: MyTextField(
-                    controller: passwordController,
-                    hintText: 'Contraseña',
-                    obscureText: true,
-                  ),
+                MyTextField(
+                  controller: passwordController,
+                  hintText: 'Contraseña',
+                  obscureText: true,
                 ),
+
                 // Forgot password
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -168,22 +172,18 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 15),
                 //sign in button
-                Semantics(
-                  label: 'login',
-                  enabled: true,
-                  button: true,
-                  child: MyButton(
-                    onPressed: () {
-                      // aqui llamo a mi evento bloc authloginRequest
-                      context.read<AuthBloc>().add(AuthloginRequested(
-                            rol: dropdownValue,
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                          ));
-                    },
-                    text: 'Iniciar Sesión',
-                  ),
+                MyButton(
+                  onPressed: () {
+                    // aqui llamo a mi evento bloc authloginRequest
+                    context.read<AuthBloc>().add(AuthloginRequested(
+                          rol: dropdownValue,
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim(),
+                        ));
+                  },
+                  text: 'Iniciar Sesión',
                 ),
+
                 const SizedBox(height: 15),
                 //Registrarse
               ],

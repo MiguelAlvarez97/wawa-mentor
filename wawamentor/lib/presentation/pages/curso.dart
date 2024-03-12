@@ -23,7 +23,7 @@ class CourseDetailsPage extends StatelessWidget {
     initialVideoId: 'QEAl_SHPfUU', //https://www.youtube.com/watch?v=QEAl_SHPfUU
     flags: const YoutubePlayerFlags(
       autoPlay: true,
-      mute: true,
+      mute: false,
     ),
   );
 
