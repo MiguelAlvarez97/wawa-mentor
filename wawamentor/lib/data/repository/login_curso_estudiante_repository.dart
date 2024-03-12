@@ -9,10 +9,10 @@ class LoginCursoEstudianteRepository {
   LoginCursoEstudianteRepository(this.loginCursosEstudianteDataProvider);
 
   Future<List<CursosModel>> getCursosEstudiante(
-      String username, String password) async {
+      String username, String password, String apiLogin) async {
     try {
       final cursosEstudiante = await loginCursosEstudianteDataProvider
-          .getCursosEstudiante(username, password);
+          .getCursosEstudiante(username, password, apiLogin);
       final List<dynamic> cursosList = jsonDecode(cursosEstudiante);
 
       // Mapea cada elemento de la lista a una instancia del modelo de Cursos

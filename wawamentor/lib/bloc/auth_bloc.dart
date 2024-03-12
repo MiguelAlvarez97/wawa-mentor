@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart'; //foundation esta presente por que exi
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/data/repository/login_curso_estudiante_repository.dart';
 import 'package:wawamentor/models/cursos_model.dart';
+import 'package:wawamentor/urls.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -41,12 +42,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         //logica de la API de validacion aquí
         if (rol == 'Estudiante') {
           final cursos = await loginCursoEstudianteRepository
-              .getCursosEstudiante(email, password);
+              .getCursosEstudiante(email, password, apiLoginEstudiante);
           emit(AuthSucces(cursos: cursos));
         } else if (rol == 'Maestro') {
-          emit(AuthFailure('Maestro no implementado'));
+          final cursos = await loginCursoEstudianteRepository
+              .getCursosEstudiante(email, password, apiLoginMaestro);
+          emit(AuthSucces(cursos: cursos));
         } else {
-          emit(AuthFailure('Administrador no implementado'));
+          final cursos = await loginCursoEstudianteRepository
+              .getCursosEstudiante(email, password, apiLoginAdministrador);
+          emit(AuthSucces(cursos: cursos));
         }
       }
     } catch (e) {
