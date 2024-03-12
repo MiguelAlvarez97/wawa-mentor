@@ -23,6 +23,7 @@ class LoginCursoEstudianteRepository {
       // Mapea cada elemento de la lista a una instancia del modelo de Cursos
       List<CursosModel> cursos =
           cursosList.map((curso) => CursosModel.fromMap(curso)).toList();
+      cursos.map((e) => print(e.toString()));
       return cursos;
     } catch (e) {
       throw e.toString();
