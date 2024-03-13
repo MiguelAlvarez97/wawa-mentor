@@ -31,6 +31,8 @@ class _HomePageState extends State<HomePage> {
           );
         }
         if (state is AuthSucces) {
+          final datosUsuario = state.userData;
+          final cursosEstudiante = state.cursos;
           return Scaffold(
             appBar: AppBar(
               title: Text(
