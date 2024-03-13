@@ -61,16 +61,6 @@ class _HomePageState extends State<HomePage> {
                       foregroundImage:
                           NetworkImage('$imagePath${datosUsuario.userPhoto}'),
                     ),
-                    //AssetImage('lib/assets/user.png')),
-                    // FadeInImage.assetNetwork(
-                    //     placeholder: 'lib/assets/user.png',
-                    //     image: '$imagePath${datosUsuario.userPhoto}',
-                    //   ),
-
-                    //     SquareTile(
-                    //   imagePath: 'lib/assets/user.png',
-                    //   size: 40,
-                    // ),
                   ),
                   Text(
                       'Hola ${'${(state).userData.firstName} ${state.userData.lastName}'}'),
@@ -80,9 +70,9 @@ class _HomePageState extends State<HomePage> {
                     leading: const Icon(Icons.face),
                     title: const Text('Perfil de Usuario'),
                     onTap: () {
-                      // pop the drawer
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/homepage');
+                      // pop the drawer ir al perfil de usuario
+                      // Navigator.pop(context);
+                      // Navigator.pushNamed(context, '/homepage');
                     },
                   ),
 
@@ -100,6 +90,8 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+
+            /// PARA CURSOS DINAMICOS UTILIZAR ListView.Builder
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
