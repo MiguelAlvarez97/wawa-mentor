@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
 import 'package:wawamentor/presentation/widgets/my_button.dart';
 import 'package:wawamentor/presentation/widgets/square_tile.dart';
+import 'package:wawamentor/urls.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -53,17 +54,23 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.grey[100],
               child: Column(
                 children: [
-                  //Common to place a drawer header here
-                  const DrawerHeader(
-                    child:
-                        // Icon(
-                        //   Icons.face_outlined,
-                        //   size: 48,
-                        // ),
-                        SquareTile(
-                      imagePath: 'lib/assets/user.png',
-                      size: 40,
+                  DrawerHeader(
+                    child: CircleAvatar(
+                      radius: 100, // Image radius
+                      backgroundImage: const AssetImage('lib/assets/user.png'),
+                      foregroundImage:
+                          NetworkImage('$imagePath${datosUsuario.userPhoto}'),
                     ),
+                    //AssetImage('lib/assets/user.png')),
+                    // FadeInImage.assetNetwork(
+                    //     placeholder: 'lib/assets/user.png',
+                    //     image: '$imagePath${datosUsuario.userPhoto}',
+                    //   ),
+
+                    //     SquareTile(
+                    //   imagePath: 'lib/assets/user.png',
+                    //   size: 40,
+                    // ),
                   ),
                   Text(
                       'Hola ${'${(state).userData.firstName} ${state.userData.lastName}'}'),
