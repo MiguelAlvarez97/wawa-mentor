@@ -98,9 +98,10 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 20),
                 const Center(
                   child: Text(
-                    'MIS CURSOS',
+                    'M I S   C U R S O S',
                     style: TextStyle(
                         fontSize: 20,
+                        fontStyle: FontStyle.italic,
                         fontWeight: FontWeight.w900,
                         color: Color.fromARGB(255, 17, 68, 145)),
                   ),
@@ -123,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Image.network(
                                 '$imageCursoPath${cursos[index].courseImg}'),
+                            const SizedBox(height: 8),
                             Text(
                               cursos[index].courseName,
                               style: const TextStyle(
