@@ -4,3 +4,4 @@ const String apiLoginEstudiante =
 const String apiLoginMaestro = '${path}apiwawamentor/user_wm/loginMaestro';
 const String apiLoginAdministrador =
     '${path}apiwawamentor/user_wm/loginAdministrador';
+const String apiLoginUserData = '${path}apiwawamentor/user_wm/login';

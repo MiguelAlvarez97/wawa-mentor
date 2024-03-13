@@ -63,7 +63,8 @@ class _HomePageState extends State<HomePage> {
                       size: 40,
                     ),
                   ),
-                  Text('Hola ${(state).cursos[0]}'),
+                  Text(
+                      'Hola ${'${(state).userData.firstName} ${state.userData.lastName}'}'),
 
                   // Homepage List title
                   ListTile(

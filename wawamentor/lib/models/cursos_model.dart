@@ -4,8 +4,8 @@ import 'dart:convert';
 class CursosModel {
   final int idCourse;
   final String courseName;
-  final String courseDesc;
-  final String courseImg;
+  final String? courseDesc;
+  final String? courseImg;
   final String courseVideo;
   final int isOptional;
   final String startDate;
@@ -17,8 +17,8 @@ class CursosModel {
   CursosModel({
     required this.idCourse,
     required this.courseName,
-    required this.courseDesc,
-    required this.courseImg,
+    this.courseDesc,
+    this.courseImg,
     required this.courseVideo,
     required this.isOptional,
     required this.startDate,
@@ -80,8 +80,9 @@ class CursosModel {
     return CursosModel(
       idCourse: map['ID_COURSE'] as int,
       courseName: map['COURSE__NAME'] as String,
-      courseDesc: map['COURSE_DESC'] as String,
-      courseImg: map['COURSE_IMG'] as String,
+      courseDesc:
+          map['COURSE_DESC'] != null ? map['COURSE_DESC'] as String : null,
+      courseImg: map['COURSE_IMG'] != null ? map['COURSE_IMG'] as String : null,
       courseVideo: map['COURSE_VIDEO'] as String,
       isOptional: map['IS_OPTIONAL'] as int,
       startDate: map['START_DATE'] as String,

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
 import 'package:wawamentor/data/data_provider/login_cursos_estudiante_provider.dart';
+import 'package:wawamentor/data/data_provider/login_user_data_provider.dart';
 import 'package:wawamentor/data/repository/login_curso_estudiante_repository.dart';
+import 'package:wawamentor/data/repository/login_user_data_repository.dart';
 import 'package:wawamentor/presentation/pages/curso.dart';
 import 'package:wawamentor/presentation/pages/home_page.dart';
 import 'package:wawamentor/presentation/pages/login_page.dart';
@@ -17,13 +19,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) =>
-          LoginCursoEstudianteRepository(LoginCursosEstudianteDataProvider()),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => LoginCursoEstudianteRepository(
+              LoginCursosEstudianteDataProvider()),
+        ),
+        RepositoryProvider(
+          create: (context) => LoginUserDataRepository(LoginUserDataProvider()),
+        ),
+      ],
       child: BlocProvider(
         create: (context) => AuthBloc(
-          context.read<LoginCursoEstudianteRepository>(),
-        ),
+            context.read<LoginCursoEstudianteRepository>(),
+            context.read<LoginUserDataRepository>()),
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'WawaMentor',

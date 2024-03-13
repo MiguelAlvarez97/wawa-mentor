@@ -7,8 +7,9 @@ final class AuthInitial extends AuthState {}
 
 final class AuthSucces extends AuthState {
   final List<CursosModel> cursos;
+  final UserModel userData;
 
-  AuthSucces({required this.cursos}); //userModel
+  AuthSucces({required this.cursos, required this.userData}); //userModel
 }
 
 final class AuthFailure extends AuthState {
