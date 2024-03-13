@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         }
         if (state is AuthSucces) {
           final datosUsuario = state.userData;
-          final cursosEstudiante = state.cursos;
+          final cursos = state.cursos;
           final niveles = state.niveles;
           return Scaffold(
             appBar: AppBar(
@@ -58,8 +58,8 @@ class _HomePageState extends State<HomePage> {
                     child: CircleAvatar(
                       radius: 100, // Image radius
                       backgroundImage: const AssetImage('lib/assets/user.png'),
-                      foregroundImage:
-                          NetworkImage('$imagePath${datosUsuario.userPhoto}'),
+                      foregroundImage: NetworkImage(
+                          '$imageUserPath${datosUsuario.userPhoto}'),
                     ),
                   ),
                   Text(
@@ -92,107 +92,73 @@ class _HomePageState extends State<HomePage> {
             ),
 
             /// PARA CURSOS DINAMICOS UTILIZAR ListView.Builder
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Wrap(
-                  spacing: 20.0,
-                  runSpacing: 20.0,
-                  children: <Widget>[
-                    // Panel de Cursos de Música
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2 -
-                          30, // -30 para tener margen entre los paneles
-                      child: Card(
-                        elevation: 4,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                const SizedBox(height: 20),
+                const Center(
+                  child: Text(
+                    'MIS CURSOS',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                        color: Color.fromARGB(255, 17, 68, 145)),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                      childAspectRatio: 0.75,
+                    ),
+                    itemCount: cursos.length,
+                    itemBuilder: (context, index) {
+                      return Card(
                         child: Column(
-                          children: <Widget>[
-                            Image.asset('lib/assets/Solfeo.png'),
-                            const Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Text(
-                                'Cursos de Solfeo',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                          //crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.network(
+                                '$imageCursoPath${cursos[index].courseImg}'),
+                            Text(
+                              cursos[index].courseName,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 19.0),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text(
-                                'Aprende teoría Musical',
-                                textAlign: TextAlign.center,
-                              ),
+                            const SizedBox(
+                              height: 8,
                             ),
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 25.0),
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 17, 68, 145),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                niveles[index].courseLevel,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            )
                           ],
                         ),
-                      ),
-                    ),
-                    //Panel de Actividad
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2 - 30,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/CursosPage');
-                        },
-                        child: Card(
-                          elevation: 4,
-                          child: Column(
-                            children: <Widget>[
-                              Image.asset('lib/assets/guitar.png'),
-                              const Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Text(
-                                  'Curso de Guitarra',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ), // -30 para tener margen entre los paneles
-                    ),
-                    // // Panel de Actividad
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2 - 30,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Card(
-                          elevation: 4,
-                          child: Column(
-                            children: <Widget>[
-                              Image.asset(
-                                  'lib/assets/ActividadesPendientes.png'),
-                              const Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Text(
-                                  'Actividades Pendientes',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ), // -30 para tener margen entre los paneles
-                    ),
-                    MyButton(
-                      onPressed: () {
-                        // Acción al presionar el botón
-                        //Navigator.pop(context);
-                        Navigator.pushNamed(context, '/MetronomoPage');
-                      },
-                      text: 'Metrónomo',
-                    ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
-              ),
+                MyButton(
+                  onPressed: () {
+                    // Acción al presionar el botón
+                    //Navigator.pop(context);
+                    Navigator.pushNamed(context, '/MetronomoPage');
+                  },
+                  text: 'Metrónomo',
+                ),
+                const SizedBox(height: 25),
+              ],
             ),
           );
         }

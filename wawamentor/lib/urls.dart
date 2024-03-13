@@ -16,5 +16,6 @@ const String coursesLevelMaestro = '${path}apiwawamentor/coursesLevelMaestro';
 
 /////////////URLS//////////////////////
 
-const String imagePath =
+const String imageUserPath =
     'https://wayrawawa.com/wawamentor/assets/images/usuarios/';
+const String imageCursoPath = 'https://wayrawawa.com/wawamentor/assets/images/';
