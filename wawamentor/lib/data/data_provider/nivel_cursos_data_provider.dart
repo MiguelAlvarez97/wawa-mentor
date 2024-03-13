@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class LoginUserDataProvider {
-  Future<String> getUserData(
+class NivelCursosDataProvider {
+  Future<String> getNivelCursosData(
       String username, String password, String apiLogin) async {
     try {
       final res = await http.post(

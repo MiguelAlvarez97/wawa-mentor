@@ -16,7 +16,7 @@ class LoginCursosEstudianteDataProvider {
         }),
       );
       if (res.statusCode != 200) {
-        throw res.body;
+        throw jsonDecode(res.body)['message'];
       } else {
         return res.body;
       }

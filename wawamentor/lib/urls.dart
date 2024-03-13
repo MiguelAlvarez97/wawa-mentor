@@ -9,6 +9,11 @@ const String apiLoginAdministrador =
     '${path}apiwawamentor/user_wm/loginAdministrador';
 const String apiLoginUserData = '${path}apiwawamentor/user_wm/login';
 
+const String coursesLevelEstudiante =
+    '${path}apiwawamentor/coursesLevelEstudiante';
+
+const String coursesLevelMaestro = '${path}apiwawamentor/coursesLevelMaestro';
+
 /////////////URLS//////////////////////
 
 const String imagePath =

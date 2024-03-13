@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
 import 'package:wawamentor/presentation/widgets/my_button.dart';
-import 'package:wawamentor/presentation/widgets/square_tile.dart';
 import 'package:wawamentor/urls.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,6 +33,7 @@ class _HomePageState extends State<HomePage> {
         if (state is AuthSucces) {
           final datosUsuario = state.userData;
           final cursosEstudiante = state.cursos;
+          final niveles = state.niveles;
           return Scaffold(
             appBar: AppBar(
               title: Text(
@@ -99,7 +99,6 @@ class _HomePageState extends State<HomePage> {
                   spacing: 20.0,
                   runSpacing: 20.0,
                   children: <Widget>[
-                    Container(),
                     // Panel de Cursos de Música
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2 -
@@ -183,26 +182,17 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ), // -30 para tener margen entre los paneles
                     ),
+                    MyButton(
+                      onPressed: () {
+                        // Acción al presionar el botón
+                        //Navigator.pop(context);
+                        Navigator.pushNamed(context, '/MetronomoPage');
+                      },
+                      text: 'Metrónomo',
+                    ),
                   ],
                 ),
               ),
-            ),
-            floatingActionButton:
-                // FloatingActionButton.large(
-                //   onPressed: () {
-                //     // Acción al presionar el botón
-                //     //Navigator.pop(context);
-                //     Navigator.pushNamed(context, '/MetronomoPage');
-                //   },
-                //   child: const Text('Metrónomo'),
-                // ),
-                MyButton(
-              onPressed: () {
-                // Acción al presionar el botón
-                //Navigator.pop(context);
-                Navigator.pushNamed(context, '/MetronomoPage');
-              },
-              text: 'Metrónomo',
             ),
           );
         }
