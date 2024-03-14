@@ -28,6 +28,10 @@ class _HomePageState extends State<HomePage> {
           print(state.teacherCurso.teacherAboutMe);
           Navigator.pushNamed(context, '/CursoPage');
         }
+        if (state is AuthFailure) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.error)));
+        }
       },
       builder: (context, state) {
         if (state is AuthLoading) {
@@ -191,7 +195,11 @@ class _HomePageState extends State<HomePage> {
                         child: InkWell(
                           splashColor: Colors.blue.shade900.withAlpha(50),
                           onTap: () {
-                            debugPrint('Card tapped.');
+                            context.read<AuthBloc>().add(InfoCursoRequested(
+                                curso: cursos[index],
+                                idCurso: cursos[index].idCourse.toString(),
+                                idTeacher:
+                                    niveles[index].idTeacher.toString()));
                           },
                           child: Column(
                             //crossAxisAlignment: CrossAxisAlignment.center,

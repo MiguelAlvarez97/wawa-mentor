@@ -22,7 +22,7 @@ class CourseDetailsPage extends StatelessWidget {
   final YoutubePlayerController _controller = YoutubePlayerController(
     initialVideoId: 'QEAl_SHPfUU', //https://www.youtube.com/watch?v=QEAl_SHPfUU
     flags: const YoutubePlayerFlags(
-      autoPlay: true,
+      autoPlay: false,
       mute: false,
     ),
   );
