@@ -48,6 +48,10 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/HomePage');
             }
+            if (state is AuthAdmin) {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/HomePage');
+            }
           },
           builder: (context, state) {
             if (state is AuthLoading) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
+import 'package:wawamentor/presentation/pages/home_admin.dart';
 import 'package:wawamentor/presentation/widgets/my_button.dart';
 import 'package:wawamentor/urls.dart';
 
@@ -29,6 +30,70 @@ class _HomePageState extends State<HomePage> {
           return const Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
+        }
+        if (state is AuthAdmin) {
+          final datosUsuario = state.adminData;
+          return Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  'Inicio',
+                  style: TextStyle(color: Colors.grey[200]),
+                ),
+                iconTheme: IconThemeData(color: Colors.grey[200]),
+                backgroundColor: const Color.fromARGB(255, 17, 68, 145),
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.notifications),
+                    color: Colors.grey[200],
+                  )
+                ],
+              ),
+              drawer: Drawer(
+                backgroundColor: Colors.grey[100],
+                child: Column(
+                  children: [
+                    DrawerHeader(
+                      child: CircleAvatar(
+                        radius: 100, // Image radius
+                        backgroundImage:
+                            const AssetImage('lib/assets/user.png'),
+                        foregroundImage: NetworkImage(
+                            '$imageUserPath${datosUsuario.userPhoto}'),
+                      ),
+                    ),
+                    Text(
+                        'Hola ${'${datosUsuario.firstName} ${datosUsuario.lastName}'}'),
+
+                    // Homepage List title
+                    ListTile(
+                      leading: const Icon(Icons.face),
+                      title: const Text('Perfil de Usuario'),
+                      onTap: () {
+                        // pop the drawer ir al perfil de usuario
+                        // Navigator.pop(context);
+                        // Navigator.pushNamed(context, '/homepage');
+                      },
+                    ),
+
+                    //setting page list tile
+                    ListTile(
+                      leading: const Icon(Icons.logout),
+                      title: const Text('Salir de WawaMentor'),
+                      onTap: () {
+                        // pop the drawer
+                        Navigator.pop(context);
+                        //context.read es un ontime event
+                        context.read<AuthBloc>().add(AuthLogOutRequested());
+                      },
+                    )
+                  ],
+                ),
+              ),
+
+              /// PARA CURSOS DINAMICOS UTILIZAR ListView.Builder
+              body: HomeAdmin());
+          //return HomeAdmin();
         }
         if (state is AuthSucces) {
           final datosUsuario = state.userData;
@@ -63,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                      'Hola ${'${(state).userData.firstName} ${state.userData.lastName}'}'),
+                      'Hola ${'${datosUsuario.firstName} ${datosUsuario.lastName}'}'),
 
                   // Homepage List title
                   ListTile(
@@ -174,6 +239,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         }
+
         return const Center();
       },
     );

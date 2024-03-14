@@ -68,7 +68,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               AuthSucces(cursos: cursos, userData: userData, niveles: niveles));
         } else {
           //se debe logear con el modelo de administrador
-          emit(AuthFailure('no implementado'));
+          final adminData = await loginUserDataRepository.getUserData(
+              email, password, apiLoginAdmin);
+          emit(AuthAdmin(adminData: adminData));
         }
       }
     } catch (e) {
