@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart'; //foundation esta presente por que existe un @inmutable
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wawamentor/data/repository/lesson_curso_repository.dart';
 import 'package:wawamentor/data/repository/login_curso_estudiante_repository.dart';
 import 'package:wawamentor/data/repository/login_user_data_repository.dart';
 import 'package:wawamentor/data/repository/nivel_cursos_repository.dart';
+import 'package:wawamentor/data/repository/teacher_curso_repository.dart';
 import 'package:wawamentor/models/cursos_model.dart';
+import 'package:wawamentor/models/lesson_model.dart';
 import 'package:wawamentor/models/nivel_model.dart';
+import 'package:wawamentor/models/teacher_model.dart';
 import 'package:wawamentor/models/user_wm_model.dart';
 import 'package:wawamentor/urls.dart';
 
@@ -15,11 +19,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginCursoEstudianteRepository loginCursoEstudianteRepository;
   final LoginUserDataRepository loginUserDataRepository;
   final NivelCursosRepository nivelCursosRepository;
+  final LessonCursoRepository lessonCursoRepository;
+  final TeacherCursoRepository teacherCursoRepository;
   //constructor de BLOC
-  AuthBloc(this.loginCursoEstudianteRepository, this.loginUserDataRepository,
-      this.nivelCursosRepository)
+  AuthBloc(
+      this.loginCursoEstudianteRepository,
+      this.loginUserDataRepository,
+      this.nivelCursosRepository,
+      this.lessonCursoRepository,
+      this.teacherCursoRepository)
       : super(AuthInitial()) {
     on<AuthloginRequested>(_getCursoEstudiante);
+
+    on<InfoCursoRequested>(_infoCourse);
 
     on<AuthLogOutRequested>((event, emit) async {
       emit(AuthLoading());
@@ -73,6 +85,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthAdmin(adminData: adminData));
         }
       }
+    } catch (e) {
+      emit(AuthFailure(e.toString()));
+    }
+  }
+
+  void _infoCourse(
+    InfoCursoRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    try {
+      final curso = event.curso;
+      final idCurso = event.idCurso;
+      final idTeacher = event.idTeacher;
+      final listaLecciones = await lessonCursoRepository.getLessonsOfCourse(
+          idCurso, apiConsultarLeccionesCurso);
+      final datosMaestroCurso = await teacherCursoRepository
+          .getInfoTeacherRepository(idTeacher, apiConsultarInfoTeacher);
+      emit(AuthCurso(
+          curso: curso,
+          teacherCurso: datosMaestroCurso,
+          lecciones: listaLecciones));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }

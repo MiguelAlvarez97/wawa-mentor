@@ -12,4 +12,13 @@ final class AuthloginRequested extends AuthEvent {
       {required this.email, required this.password, required this.rol});
 }
 
+final class InfoCursoRequested extends AuthEvent {
+  final CursosModel curso;
+  final String idCurso;
+  final String idTeacher;
+
+  InfoCursoRequested(
+      {required this.curso, required this.idCurso, required this.idTeacher});
+}
+
 final class AuthLogOutRequested extends AuthEvent {}

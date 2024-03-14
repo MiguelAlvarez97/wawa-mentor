@@ -24,6 +24,10 @@ class _HomePageState extends State<HomePage> {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/LoginPage');
         }
+        if (state is AuthCurso) {
+          print(state.teacherCurso.teacherAboutMe);
+          Navigator.pushNamed(context, '/CursoPage');
+        }
       },
       builder: (context, state) {
         if (state is AuthLoading) {

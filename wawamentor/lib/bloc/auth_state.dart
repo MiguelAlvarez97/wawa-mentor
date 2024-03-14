@@ -28,3 +28,13 @@ final class AuthAdmin extends AuthState {
   final UserModel adminData;
   AuthAdmin({required this.adminData});
 }
+
+final class AuthCurso extends AuthState {
+  final CursosModel curso;
+  final TeacherModel teacherCurso;
+  final List<LessonModel> lecciones;
+  AuthCurso(
+      {required this.curso,
+      required this.teacherCurso,
+      required this.lecciones});
+}

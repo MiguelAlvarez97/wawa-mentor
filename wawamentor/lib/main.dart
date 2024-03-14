@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/app_bloc_observer.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
+import 'package:wawamentor/data/data_provider/lesson_curso_data_provider.dart';
 import 'package:wawamentor/data/data_provider/login_cursos_estudiante_provider.dart';
 import 'package:wawamentor/data/data_provider/login_user_data_provider.dart';
 import 'package:wawamentor/data/data_provider/nivel_cursos_data_provider.dart';
+import 'package:wawamentor/data/data_provider/teacher_curso_data_provider.dart';
+import 'package:wawamentor/data/repository/lesson_curso_repository.dart';
 import 'package:wawamentor/data/repository/login_curso_estudiante_repository.dart';
 import 'package:wawamentor/data/repository/login_user_data_repository.dart';
 import 'package:wawamentor/data/repository/nivel_cursos_repository.dart';
+import 'package:wawamentor/data/repository/teacher_curso_repository.dart';
 import 'package:wawamentor/presentation/pages/curso.dart';
 import 'package:wawamentor/presentation/pages/home_admin.dart';
 import 'package:wawamentor/presentation/pages/home_page.dart';
@@ -36,12 +40,21 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => NivelCursosRepository(NivelCursosDataProvider()),
         ),
+        RepositoryProvider(
+          create: (context) => LessonCursoRepository(LessonCursoDataProvider()),
+        ),
+        RepositoryProvider(
+          create: (context) =>
+              TeacherCursoRepository(TeacherCursoDataProvider()),
+        ),
       ],
       child: BlocProvider(
         create: (context) => AuthBloc(
             context.read<LoginCursoEstudianteRepository>(),
             context.read<LoginUserDataRepository>(),
-            context.read<NivelCursosRepository>()),
+            context.read<NivelCursosRepository>(),
+            context.read<LessonCursoRepository>(),
+            context.read<TeacherCursoRepository>()),
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'WawaMentor',
@@ -55,7 +68,7 @@ class MyApp extends StatelessWidget {
               '/LoginPage': (context) => const LoginPage(),
               '/HomePage': (context) => const HomePage(),
               '/MetronomoPage': (context) => const MetronomoPage(),
-              '/CursosPage': (context) => CourseDetailsPage(),
+              '/CursoPage': (context) => CourseDetailsPage(),
               '/HomeAdmin': (context) => HomeAdmin(),
             }),
       ),

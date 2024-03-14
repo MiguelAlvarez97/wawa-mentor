@@ -16,6 +16,11 @@ const String coursesLevelEstudiante =
 
 const String coursesLevelMaestro = '${path}apiwawamentor/coursesLevelMaestro';
 
+const String apiConsultarLeccionesCurso = '${path}apiwawamentor/lessons/';
+
+const String apiConsultarRecursosLeccion = '${path}apiwawamentor/resource/';
+
+const String apiConsultarInfoTeacher = '${path}apiwawamentor/teacher/';
 /////////////URLS//////////////////////
 
 const String imageUserPath =
