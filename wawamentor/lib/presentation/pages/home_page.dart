@@ -116,33 +116,46 @@ class _HomePageState extends State<HomePage> {
                     itemCount: cursos.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        child: Column(
-                          //crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.network(
-                                '$imageCursoPath${cursos[index].courseImg}'),
-                            const SizedBox(height: 8),
-                            Text(
-                              cursos[index].courseName,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 19.0),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 25.0),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 17, 68, 145),
-                                borderRadius: BorderRadius.circular(20),
+                        elevation: 5,
+                        clipBehavior: Clip.hardEdge,
+                        //color: Colors.grey.shade200,
+                        child: InkWell(
+                          splashColor: Colors.blue.shade900.withAlpha(50),
+                          onTap: () {
+                            debugPrint('Card tapped.');
+                          },
+                          child: Column(
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 8),
+                              Image.network(
+                                '$imageCursoPath${cursos[index].courseImg}',
+                                height: 110,
                               ),
-                              child: Text(
-                                niveles[index].courseLevel,
-                                style: const TextStyle(color: Colors.white),
+                              const SizedBox(height: 8),
+                              Text(
+                                cursos[index].courseName,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 19.0),
                               ),
-                            )
-                          ],
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 25.0),
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 17, 68, 145),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  niveles[index].courseLevel,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },
