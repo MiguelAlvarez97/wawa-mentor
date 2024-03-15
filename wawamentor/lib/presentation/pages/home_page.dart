@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       listener: (context, state) {
         if (state is AuthInitial) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/LoginPage');
+          Navigator.pushNamed(context, '/');
         }
         if (state is AuthCurso) {
           Navigator.pushNamed(context, '/CursoPage');

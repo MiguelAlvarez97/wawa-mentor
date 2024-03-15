@@ -161,6 +161,13 @@ class _LoginPageState extends State<LoginPage> {
                   controller: passwordController,
                   hintText: 'Contraseña',
                   obscureText: true,
+                  accionOnSubmit: (String myString) {
+                    context.read<AuthBloc>().add(AuthloginRequested(
+                          rol: dropdownValue,
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim(),
+                        ));
+                  },
                 ),
 
                 // Forgot password

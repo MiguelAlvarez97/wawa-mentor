@@ -43,6 +43,7 @@ class MyButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
         ),
+
         child: Text(
           text,
           style: const TextStyle(

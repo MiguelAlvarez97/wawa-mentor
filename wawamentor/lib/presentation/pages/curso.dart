@@ -16,19 +16,10 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   @override
   void initState() {
     super.initState();
-    // _controller = YoutubePlayerController(
-    //     initialVideoId: ytUrl,
-    //     flags: const YoutubePlayerFlags(
-    //       autoPlay: true,
-    //       mute: false,
-    //       isLive: false,
-    //     ));
   }
 
   @override
   Widget build(BuildContext context) {
-    final double screenW = MediaQuery.of(context).size.width;
-    final double screenH = MediaQuery.of(context).size.height;
     return BlocConsumer<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is AuthCurso) {
@@ -42,7 +33,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
           controller = YoutubePlayerController(
               initialVideoId: dataDelCurso.courseVideo.split('=').last,
               flags: const YoutubePlayerFlags(
-                autoPlay: true,
+                autoPlay: false,
                 mute: false,
                 isLive: false,
               ));
@@ -54,6 +45,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                 progressColors: const ProgressBarColors(
                   playedColor: Color.fromARGB(255, 17, 68, 145),
                   handleColor: Color.fromARGB(255, 17, 68, 145),
+                  backgroundColor: Color.fromRGBO(100, 181, 246, 1),
                 ),
               ),
               builder: (context, player) {
@@ -67,26 +59,51 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                         userData: state.userData));
                   },
                   child: Scaffold(
-                      appBar: AppBar(
-                        title: Text(
-                          'Curso',
-                          style: TextStyle(color: Colors.grey[200]),
-                        ),
-                        iconTheme: IconThemeData(color: Colors.grey[200]),
-                        backgroundColor: const Color.fromARGB(255, 17, 68, 145),
-                        actions: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.notifications),
-                            color: Colors.grey[200],
-                          )
+                    appBar: AppBar(
+                      title: Text(
+                        'Curso',
+                        style: TextStyle(color: Colors.grey[200]),
+                      ),
+                      iconTheme: IconThemeData(color: Colors.grey[200]),
+                      backgroundColor: const Color.fromARGB(255, 17, 68, 145),
+                      actions: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.notifications),
+                          color: Colors.grey[200],
+                        )
+                      ],
+                    ),
+                    // body: ListView(
+                    //   children: [
+                    //     Text(dataDelCurso.courseName),
+                    //     player,
+                    //     Text(dataDelCurso.courseDesc.toString()),
+                    //   ],
+                    // ),
+                    body: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Text(
+                            dataDelCurso.courseName,
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.w900,
+                                color: Color.fromARGB(255, 17, 68, 145)),
+                          ),
+                          player,
+                          Text(dataDelCurso.courseDesc.toString()),
+                          Text(dataDelCurso.courseLink),
+                          Text(dataDelCurso.daySchedule),
+                          Text(dataDelCurso.endSchedule),
+                          Text(dataDelCurso.startSchedule),
+                          Text(dataDelCurso.startDate),
+                          Text(dataDelCurso.endDate),
                         ],
                       ),
-                      body: Column(
-                        children: [
-                          player,
-                        ],
-                      )),
+                    ),
+                  ),
                 );
               });
         }

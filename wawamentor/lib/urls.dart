@@ -1,5 +1,6 @@
 ////////////servidor/////////////////
-const String path = 'http://10.0.2.2/';
+///para salir al localhost desde el VM emulator 10.0.2.2
+const String path = 'http://192.168.1.38/';
 
 /////////////APIs////////////////////
 const String apiLoginEstudiante =
