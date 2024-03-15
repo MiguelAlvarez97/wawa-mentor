@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
+import 'package:wawamentor/models/cursos_model.dart';
+import 'package:wawamentor/models/nivel_model.dart';
+import 'package:wawamentor/models/user_wm_model.dart';
 import 'package:wawamentor/presentation/pages/home_admin.dart';
 import 'package:wawamentor/presentation/widgets/my_button.dart';
 import 'package:wawamentor/urls.dart';
@@ -25,7 +28,6 @@ class _HomePageState extends State<HomePage> {
           Navigator.pushNamed(context, '/LoginPage');
         }
         if (state is AuthCurso) {
-          print(state.teacherCurso.teacherAboutMe);
           Navigator.pushNamed(context, '/CursoPage');
         }
         if (state is AuthFailure) {
@@ -198,8 +200,10 @@ class _HomePageState extends State<HomePage> {
                             context.read<AuthBloc>().add(InfoCursoRequested(
                                 curso: cursos[index],
                                 idCurso: cursos[index].idCourse.toString(),
-                                idTeacher:
-                                    niveles[index].idTeacher.toString()));
+                                idTeacher: niveles[index].idTeacher.toString(),
+                                cursos: cursos,
+                                niveles: niveles,
+                                userData: datosUsuario));
                           },
                           child: Column(
                             //crossAxisAlignment: CrossAxisAlignment.center,
@@ -252,7 +256,11 @@ class _HomePageState extends State<HomePage> {
           );
         }
 
-        return const Center();
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 17, 68, 145),
+          ),
+        );
       },
     );
   }

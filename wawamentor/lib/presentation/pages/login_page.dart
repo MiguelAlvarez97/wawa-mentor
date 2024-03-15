@@ -40,17 +40,12 @@ class _LoginPageState extends State<LoginPage> {
                   .showSnackBar(SnackBar(content: Text(state.error)));
             }
             if (state is AuthSucces) {
-              // Navigator.pushAndRemoveUntil(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => const HomePage()),
-              //     (route) => false);
-
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/HomePage');
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/HomePage', (route) => false);
             }
             if (state is AuthAdmin) {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/HomePage');
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/HomeAdmin', (route) => false);
             }
           },
           builder: (context, state) {

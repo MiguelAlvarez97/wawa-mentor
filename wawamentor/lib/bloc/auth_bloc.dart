@@ -43,6 +43,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthFailure(e.toString()));
       }
     });
+
+    on<PopHome>((PopHome event, emit) {
+      try {
+        final cursos = event.cursos;
+        final userData = event.userData;
+        final niveles = event.niveles;
+        emit(AuthSucces(cursos: cursos, userData: userData, niveles: niveles));
+      } catch (e) {
+        emit(AuthFailure(e.toString()));
+      }
+    });
   }
 
   void _getCursoEstudiante(
@@ -99,6 +110,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final curso = event.curso;
       final idCurso = event.idCurso;
       final idTeacher = event.idTeacher;
+      final cursos = event.cursos;
+      final niveles = event.niveles;
+      final userData = event.userData;
       final listaLecciones = await lessonCursoRepository.getLessonsOfCourse(
           idCurso, apiConsultarLeccionesCurso);
       final datosMaestroCurso = await teacherCursoRepository
@@ -106,7 +120,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthCurso(
           curso: curso,
           teacherCurso: datosMaestroCurso,
-          lecciones: listaLecciones));
+          lecciones: listaLecciones,
+          userData: userData,
+          niveles: niveles,
+          cursos: cursos));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }
