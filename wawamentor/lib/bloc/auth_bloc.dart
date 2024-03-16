@@ -4,10 +4,12 @@ import 'package:wawamentor/data/repository/lesson_curso_repository.dart';
 import 'package:wawamentor/data/repository/login_curso_estudiante_repository.dart';
 import 'package:wawamentor/data/repository/login_user_data_repository.dart';
 import 'package:wawamentor/data/repository/nivel_cursos_repository.dart';
+import 'package:wawamentor/data/repository/resource_repository.dart';
 import 'package:wawamentor/data/repository/teacher_curso_repository.dart';
 import 'package:wawamentor/models/cursos_model.dart';
 import 'package:wawamentor/models/lesson_model.dart';
 import 'package:wawamentor/models/nivel_model.dart';
+import 'package:wawamentor/models/resource_model.dart';
 import 'package:wawamentor/models/teacher_model.dart';
 import 'package:wawamentor/models/user_wm_model.dart';
 import 'package:wawamentor/urls.dart';
@@ -21,17 +23,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final NivelCursosRepository nivelCursosRepository;
   final LessonCursoRepository lessonCursoRepository;
   final TeacherCursoRepository teacherCursoRepository;
+  final ResourceRepository resourceRepository;
   //constructor de BLOC
   AuthBloc(
-      this.loginCursoEstudianteRepository,
-      this.loginUserDataRepository,
-      this.nivelCursosRepository,
-      this.lessonCursoRepository,
-      this.teacherCursoRepository)
-      : super(AuthInitial()) {
+    this.loginCursoEstudianteRepository,
+    this.loginUserDataRepository,
+    this.nivelCursosRepository,
+    this.lessonCursoRepository,
+    this.teacherCursoRepository,
+    this.resourceRepository,
+  ) : super(AuthInitial()) {
     on<AuthloginRequested>(_getCursoEstudiante);
 
     on<InfoCursoRequested>(_infoCourse);
+
+    on<InfoLessonRequested>(_infoLesson);
 
     on<AuthLogOutRequested>((event, emit) async {
       emit(AuthLoading());
@@ -50,6 +56,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final userData = event.userData;
         final niveles = event.niveles;
         emit(AuthSucces(cursos: cursos, userData: userData, niveles: niveles));
+      } catch (e) {
+        emit(AuthFailure(e.toString()));
+      }
+    });
+
+    on<PopCurso>((PopCurso event, emit) {
+      try {
+        emit(AuthCurso(
+            curso: event.curso,
+            teacherCurso: event.teacherCurso,
+            lecciones: event.lecciones,
+            cursos: event.cursos,
+            userData: event.userData,
+            niveles: event.niveles));
       } catch (e) {
         emit(AuthFailure(e.toString()));
       }
@@ -124,6 +144,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           userData: userData,
           niveles: niveles,
           cursos: cursos));
+    } catch (e) {
+      emit(AuthFailure(e.toString()));
+    }
+  }
+
+  void _infoLesson(InfoLessonRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final curso = event.curso;
+      final teacherCurso = event.teacherCurso;
+      final lecciones = event.lecciones;
+      final cursos = event.cursos;
+      final userData = event.userData;
+      final niveles = event.niveles;
+      final idlesson = event.idLesson;
+      final nombreLeccion = event.nombreLeccion;
+      final listaRecursos = await resourceRepository.getResourceModelRepository(
+          idlesson, apiConsultarRecursosLeccion);
+
+      emit(AuthLesson(
+          curso: curso,
+          teacherCurso: teacherCurso,
+          lecciones: lecciones,
+          cursos: cursos,
+          userData: userData,
+          niveles: niveles,
+          recursos: listaRecursos,
+          tituloLeccion: nombreLeccion));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }

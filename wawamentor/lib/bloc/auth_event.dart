@@ -29,6 +29,29 @@ final class InfoCursoRequested extends AuthEvent {
       required this.niveles});
 }
 
+final class InfoLessonRequested extends AuthEvent {
+  final CursosModel curso;
+  final TeacherModel teacherCurso;
+  final List<LessonModel> lecciones;
+  final List<CursosModel> cursos;
+  final UserModel userData;
+  final List<NivelModel> niveles;
+  final String idLesson;
+  final String nombreLeccion;
+
+  InfoLessonRequested(
+      {required this.curso,
+      required this.teacherCurso,
+      required this.lecciones,
+      required this.cursos,
+      required this.userData,
+      required this.niveles,
+      required this.idLesson,
+      required this.nombreLeccion});
+
+  //////////////////////
+}
+
 final class AuthLogOutRequested extends AuthEvent {}
 
 final class PopHome extends AuthEvent {
@@ -38,4 +61,21 @@ final class PopHome extends AuthEvent {
 
   PopHome(
       {required this.cursos, required this.userData, required this.niveles});
+}
+
+final class PopCurso extends AuthEvent {
+  final CursosModel curso;
+  final TeacherModel teacherCurso;
+  final List<LessonModel> lecciones;
+  final List<CursosModel> cursos;
+  final UserModel userData;
+  final List<NivelModel> niveles;
+
+  PopCurso(
+      {required this.curso,
+      required this.teacherCurso,
+      required this.lecciones,
+      required this.cursos,
+      required this.userData,
+      required this.niveles});
 }

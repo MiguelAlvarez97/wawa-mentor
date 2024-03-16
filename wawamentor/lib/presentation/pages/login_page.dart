@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomInset: false,
         backgroundColor: const Color.fromARGB(255, 17, 68, 145),
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {

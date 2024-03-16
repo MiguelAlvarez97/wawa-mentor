@@ -22,7 +22,11 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       builder: (context, state) {
-        if (state is AuthCurso) {
+        if (state is AuthLoading) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else if (state is AuthCurso) {
           YoutubePlayerController? controller;
 
           final dataDelCurso = state.curso;
@@ -49,39 +53,42 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                 ),
               ),
               builder: (context, player) {
-                return PopScope(
-                  canPop: true,
-                  onPopInvoked: (didPop) {
-                    //llamar a mi lógica bloc para retornar a authsuccess!!
-                    context.read<AuthBloc>().add(PopHome(
-                        cursos: state.cursos,
-                        niveles: state.niveles,
-                        userData: state.userData));
-                  },
-                  child: Scaffold(
-                    appBar: AppBar(
-                      title: Text(
-                        'Curso',
-                        style: TextStyle(color: Colors.grey[200]),
-                      ),
-                      iconTheme: IconThemeData(color: Colors.grey[200]),
-                      backgroundColor: const Color.fromARGB(255, 17, 68, 145),
-                      actions: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.notifications),
-                          color: Colors.grey[200],
-                        )
-                      ],
+                return Scaffold(
+                  appBar: AppBar(
+                    leading: IconButton(
+                      onPressed: () {
+                        //llamar a mi lógica bloc para retornar a authsuccess!!
+                        context.read<AuthBloc>().add(PopHome(
+                            cursos: state.cursos,
+                            niveles: state.niveles,
+                            userData: state.userData));
+                        Navigator.popAndPushNamed(context, '/HomePage');
+                      },
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
                     ),
-                    // body: ListView(
-                    //   children: [
-                    //     Text(dataDelCurso.courseName),
-                    //     player,
-                    //     Text(dataDelCurso.courseDesc.toString()),
-                    //   ],
-                    // ),
-                    body: SingleChildScrollView(
+                    title: Text(
+                      'Curso',
+                      style: TextStyle(color: Colors.grey[200]),
+                    ),
+                    iconTheme: IconThemeData(color: Colors.grey[200]),
+                    backgroundColor: const Color.fromARGB(255, 17, 68, 145),
+                    actions: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.notifications),
+                        color: Colors.grey[200],
+                      )
+                    ],
+                  ),
+                  // body: ListView(
+                  //   children: [
+                  //     Text(dataDelCurso.courseName),
+                  //     player,
+                  //     Text(dataDelCurso.courseDesc.toString()),
+                  //   ],
+                  // ),
+                  body: SingleChildScrollView(
+                    child: Center(
                       child: Column(
                         children: [
                           Text(
@@ -93,27 +100,81 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                                 color: Color.fromARGB(255, 17, 68, 145)),
                           ),
                           player,
-                          Text(dataDelCurso.courseDesc.toString()),
+                          Text(
+                            dataDelCurso.courseDesc.toString(),
+                            style: const TextStyle(fontSize: 30),
+                          ),
                           Text(dataDelCurso.courseLink),
                           Text(dataDelCurso.daySchedule),
                           Text(dataDelCurso.endSchedule),
                           Text(dataDelCurso.startSchedule),
                           Text(dataDelCurso.startDate),
                           Text(dataDelCurso.endDate),
+                          // Expanded(
+                          Container(
+                            height: MediaQuery.of(context).size.height / 2,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Colors.blue, Colors.green],
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                              ),
+                            ),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.all(8),
+                              itemCount: leccionesLista.length,
+                              separatorBuilder: (context, index) =>
+                                  const Divider(),
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  elevation: 4,
+                                  child: ListTile(
+                                    title:
+                                        Text(leccionesLista[index].lessonTitle),
+                                    onTap: () {
+                                      context.read<AuthBloc>().add(
+                                          InfoLessonRequested(
+                                              curso: dataDelCurso,
+                                              idLesson: leccionesLista[index]
+                                                  .idLesson
+                                                  .toString(),
+                                              cursos: state.cursos,
+                                              lecciones: leccionesLista,
+                                              niveles: state.niveles,
+                                              teacherCurso: infoMaestro,
+                                              userData: state.userData,
+                                              nombreLeccion:
+                                                  leccionesLista[index]
+                                                      .lessonTitle));
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          // )
                         ],
                       ),
                     ),
                   ),
                 );
               });
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color.fromARGB(255, 17, 68, 145),
+            ),
+            body: const Text('ESTAS EN CURSOS'),
+          );
         }
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 17, 68, 145),
-          ),
-        );
       },
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is AuthLesson) {
+          //navigator lesson;
+          Navigator.popAndPushNamed(context, '/Actividades');
+        }
+      },
     );
   }
 }

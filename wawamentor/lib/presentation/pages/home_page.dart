@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.pushNamed(context, '/');
         }
         if (state is AuthCurso) {
-          Navigator.pushNamed(context, '/CursoPage');
+          Navigator.popAndPushNamed(context, '/CursoPage');
         }
         if (state is AuthFailure) {
           ScaffoldMessenger.of(context)
@@ -257,6 +257,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 17, 68, 145),
           ),
+          body: const Text('ESTAS EN HOME'),
         );
       },
     );

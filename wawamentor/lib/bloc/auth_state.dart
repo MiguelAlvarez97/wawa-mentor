@@ -45,3 +45,24 @@ final class AuthCurso extends AuthState {
       required this.userData,
       required this.niveles});
 }
+
+final class AuthLesson extends AuthState {
+  final CursosModel curso;
+  final TeacherModel teacherCurso;
+  final List<LessonModel> lecciones;
+  final List<CursosModel> cursos;
+  final UserModel userData;
+  final List<NivelModel> niveles;
+  final List<ResourceModel> recursos;
+  final String tituloLeccion;
+
+  AuthLesson(
+      {required this.curso,
+      required this.teacherCurso,
+      required this.lecciones,
+      required this.cursos,
+      required this.userData,
+      required this.niveles,
+      required this.recursos,
+      required this.tituloLeccion});
+}
