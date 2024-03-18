@@ -42,13 +42,18 @@ class ResourceModel {
   }
 
   factory ResourceModel.fromMap(Map<String, dynamic> map) {
+    final tipo = map['RESOURCE_TYPE'] as String;
+    var enlace = map['LINK'] != null ? map['LINK'] as String : null;
+    if (tipo == 'JUEGO') {
+      enlace = enlace.toString().split('"')[1].toString();
+    }
     return ResourceModel(
       idResource: map['ID_RESOURCE'] as int,
       idLesson: map['ID_LESSON'] != null ? map['ID_LESSON'] as int : null,
-      resourceType: map['RESOURCE_TYPE'] as String,
+      resourceType: tipo,
       resourceDesc:
           map['RESOURCE_DESC'] != null ? map['RESOURCE_DESC'] as String : null,
-      link: map['LINK'] != null ? map['LINK'] as String : null,
+      link: enlace,
     );
   }
 

@@ -80,13 +80,6 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                       )
                     ],
                   ),
-                  // body: ListView(
-                  //   children: [
-                  //     Text(dataDelCurso.courseName),
-                  //     player,
-                  //     Text(dataDelCurso.courseDesc.toString()),
-                  //   ],
-                  // ),
                   body: SingleChildScrollView(
                     child: Center(
                       child: Column(
@@ -132,6 +125,8 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                                   child: ListTile(
                                     title:
                                         Text(leccionesLista[index].lessonTitle),
+                                    subtitle: Text(
+                                        leccionesLista[index].lessonContent),
                                     onTap: () {
                                       context.read<AuthBloc>().add(
                                           InfoLessonRequested(

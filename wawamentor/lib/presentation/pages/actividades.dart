@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
 
 class Actividades extends StatefulWidget {
@@ -10,6 +11,14 @@ class Actividades extends StatefulWidget {
 }
 
 class _ActividadesState extends State<Actividades> {
+  Future<void> _abrirUrl() async {
+    final url = Uri.parse(
+        'https://music.youtube.com/watch?v=Xf8XfGbre1g&si=E4ZL-2QggGW3veLm');
+    if (!await launchUrl(url)) {
+      throw Exception('No se pudo abrir $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
@@ -20,6 +29,8 @@ class _ActividadesState extends State<Actividades> {
           );
         }
         if (state is AuthLesson) {
+          final listaRecursos = state.recursos;
+
           return Scaffold(
             appBar: AppBar(
               leading: IconButton(
@@ -49,6 +60,31 @@ class _ActividadesState extends State<Actividades> {
                 )
               ],
             ),
+            body: ListView.builder(
+                itemCount: listaRecursos.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 5,
+                    surfaceTintColor: Colors.amber,
+                    margin: const EdgeInsets.all(10),
+                    child: ExpansionTile(
+                      title: Text(listaRecursos[index].resourceDesc.toString()),
+                      //subtitle: Text(listaRecursos[index].link.toString()),
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async {
+                            final url =
+                                Uri.parse(listaRecursos[index].link.toString());
+                            if (!await launchUrl(url)) {
+                              throw Exception('No se pudo abrir $url');
+                            }
+                          },
+                          child: Text(listaRecursos[index].link.toString()),
+                        )
+                      ],
+                    ),
+                  );
+                }),
           );
         }
 

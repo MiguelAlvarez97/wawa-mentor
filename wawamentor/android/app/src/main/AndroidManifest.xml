@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Place inside the <queries> element. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="wawamentor"
         android:name="${applicationName}"
