@@ -1,6 +1,10 @@
 ////////////servidor/////////////////
 ///para salir al localhost desde el VM emulator 10.0.2.2
-const String path = 'http://192.168.1.38/';
+///direccion despliegue final https://wayrawawa.com/
+///
+/////pruebas localhost desde dispositivo movil físico
+//const String path = 'http://192.168.1.38/';
+const String path = 'https://wayrawawa.com/';
 
 /////////////APIs////////////////////
 const String apiLoginEstudiante =
