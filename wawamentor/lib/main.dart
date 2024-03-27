@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wawamentor/app_bloc_observer.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
+import 'package:wawamentor/data/data_provider/data_user_wm_data_provider.dart';
 import 'package:wawamentor/data/data_provider/lesson_curso_data_provider.dart';
 import 'package:wawamentor/data/data_provider/login_cursos_estudiante_provider.dart';
 import 'package:wawamentor/data/data_provider/login_user_data_provider.dart';
 import 'package:wawamentor/data/data_provider/nivel_cursos_data_provider.dart';
 import 'package:wawamentor/data/data_provider/resource_data_provider.dart';
 import 'package:wawamentor/data/data_provider/teacher_curso_data_provider.dart';
+import 'package:wawamentor/data/repository/data_user_wm_repository.dart';
 import 'package:wawamentor/data/repository/lesson_curso_repository.dart';
 import 'package:wawamentor/data/repository/login_curso_estudiante_repository.dart';
 import 'package:wawamentor/data/repository/login_user_data_repository.dart';
@@ -53,6 +55,8 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => ResourceRepository(ResourceDataProvider()),
         ),
+        RepositoryProvider(
+            create: (context) => DataUserRepository(UserDataProvider())),
       ],
       child: BlocProvider(
         create: (context) => AuthBloc(
@@ -62,6 +66,7 @@ class MyApp extends StatelessWidget {
           context.read<LessonCursoRepository>(),
           context.read<TeacherCursoRepository>(),
           context.read<ResourceRepository>(),
+          context.read<DataUserRepository>(),
         ),
         child: MaterialApp(
             debugShowCheckedModeBanner: false,

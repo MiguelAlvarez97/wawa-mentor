@@ -3,8 +3,9 @@
 ///direccion despliegue final https://wayrawawa.com/
 ///
 /////pruebas localhost desde dispositivo movil físico
-//const String path = 'http://192.168.1.38/';
-const String path = 'https://wayrawawa.com/';
+const String path = 'http://192.168.1.38/';
+//const String path = 'https://wayrawawa.com/';
+//const String path = 'https://10.0.2.2/';
 
 /////////////APIs////////////////////
 const String apiLoginEstudiante =
@@ -15,6 +16,8 @@ const String apiLoginAdministrador =
 const String apiLoginUserData = '${path}apiwawamentor/user_wm/login';
 
 const String apiLoginAdmin = '${path}apiwawamentor/user_wm/loginAdministrador';
+
+const String apiConsultaUser = '${path}apiwawamentor/user_wm/';
 
 const String coursesLevelEstudiante =
     '${path}apiwawamentor/coursesLevelEstudiante';

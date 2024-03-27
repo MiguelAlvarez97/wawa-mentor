@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart'; //foundation esta presente por que existe un @inmutable
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wawamentor/data/repository/data_user_wm_repository.dart';
 import 'package:wawamentor/data/repository/lesson_curso_repository.dart';
 import 'package:wawamentor/data/repository/login_curso_estudiante_repository.dart';
 import 'package:wawamentor/data/repository/login_user_data_repository.dart';
@@ -24,6 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LessonCursoRepository lessonCursoRepository;
   final TeacherCursoRepository teacherCursoRepository;
   final ResourceRepository resourceRepository;
+  final DataUserRepository dataUserRepository;
   //constructor de BLOC
   AuthBloc(
     this.loginCursoEstudianteRepository,
@@ -32,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this.lessonCursoRepository,
     this.teacherCursoRepository,
     this.resourceRepository,
+    this.dataUserRepository,
   ) : super(AuthInitial()) {
     on<AuthloginRequested>(_getCursoEstudiante);
 
@@ -69,7 +72,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             lecciones: event.lecciones,
             cursos: event.cursos,
             userData: event.userData,
-            niveles: event.niveles));
+            niveles: event.niveles,
+            datosMaestro: event.datosMaestro));
       } catch (e) {
         emit(AuthFailure(e.toString()));
       }
@@ -137,13 +141,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           idCurso, apiConsultarLeccionesCurso);
       final datosMaestroCurso = await teacherCursoRepository
           .getInfoTeacherRepository(idTeacher, apiConsultarInfoTeacher);
+      final datosMaestro =
+          await dataUserRepository.getUserData(idTeacher, apiConsultaUser);
       emit(AuthCurso(
           curso: curso,
           teacherCurso: datosMaestroCurso,
           lecciones: listaLecciones,
           userData: userData,
           niveles: niveles,
-          cursos: cursos));
+          cursos: cursos,
+          datosMaestro: datosMaestro));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }
@@ -160,6 +167,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final niveles = event.niveles;
       final idlesson = event.idLesson;
       final nombreLeccion = event.nombreLeccion;
+      final datosMaestro = event.datosMaestro;
       final listaRecursos = await resourceRepository.getResourceModelRepository(
           idlesson, apiConsultarRecursosLeccion);
 
@@ -171,7 +179,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           userData: userData,
           niveles: niveles,
           recursos: listaRecursos,
-          tituloLeccion: nombreLeccion));
+          tituloLeccion: nombreLeccion,
+          datosMaestro: datosMaestro));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }

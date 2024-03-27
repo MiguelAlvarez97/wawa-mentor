@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wawamentor/bloc/auth_bloc.dart';
+import 'package:wawamentor/urls.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CourseDetailPage extends StatefulWidget {
   const CourseDetailPage({super.key});
@@ -32,6 +35,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
           final dataDelCurso = state.curso;
           final leccionesLista = state.lecciones;
           final infoMaestro = state.teacherCurso;
+          final dataMaestro = state.datosMaestro;
           //ytUrl = dataDelCurso.courseVideo.split('=').last;
 
           controller = YoutubePlayerController(
@@ -93,16 +97,233 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                                 color: Color.fromARGB(255, 17, 68, 145)),
                           ),
                           player,
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Text(
+                                  'Maestro:',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 25),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade200,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: ExpansionTile(
+                              leading: CircleAvatar(
+                                radius: 30, // Image radius
+                                backgroundImage:
+                                    const AssetImage('lib/assets/user.png'),
+                                foregroundImage: NetworkImage(
+                                    '$imageUserPath${dataMaestro.userPhoto.toString()}}'),
+                              ),
+                              title: Text(infoMaestro.teacherRol),
+                              subtitle: Text(
+                                  '${dataMaestro.firstName} ${dataMaestro.lastName}'),
+                              children: [
+                                Text(infoMaestro.teacherAboutMe.toString()),
+                                ListTile(
+                                  leading:
+                                      const FaIcon(FontAwesomeIcons.facebook),
+                                  title: Text(infoMaestro.teacherFB.toString()),
+                                ),
+                                ListTile(
+                                  leading:
+                                      const FaIcon(FontAwesomeIcons.instagram),
+                                  title: Text(infoMaestro.teacherIG.toString()),
+                                ),
+                                ListTile(
+                                  leading:
+                                      const FaIcon(FontAwesomeIcons.whatsapp),
+                                  title: Text(infoMaestro.teacherWP.toString()),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Text(
+                                  'Descripción del curso',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            ],
+                          ),
                           Text(
                             dataDelCurso.courseDesc.toString(),
-                            style: const TextStyle(fontSize: 30),
+                            style: const TextStyle(fontSize: 16),
                           ),
-                          Text(dataDelCurso.courseLink),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Text(
+                                  'Enlace del curso',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              final url =
+                                  Uri.parse(dataDelCurso.courseLink.toString());
+                              if (!await launchUrl(url)) {
+                                throw Exception('No se pudo abrir $url');
+                              }
+                            },
+                            child: Text(dataDelCurso.courseLink.toString()),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Text(
+                                  'Horario del Curso',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            ],
+                          ),
                           Text(dataDelCurso.daySchedule),
-                          Text(dataDelCurso.endSchedule),
                           Text(dataDelCurso.startSchedule),
+                          Text(dataDelCurso.endSchedule),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Text(
+                                  'Fechas de Inicio y Fin del Curso',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            ],
+                          ),
                           Text(dataDelCurso.startDate),
                           Text(dataDelCurso.endDate),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Text(
+                                  'Contenido del curso:',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade800,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  thickness: 0.5,
+                                  color: Colors.grey[400],
+                                ),
+                              ),
+                            ],
+                          ),
                           // Expanded(
                           Container(
                             height: MediaQuery.of(context).size.height / 2,
@@ -141,7 +362,9 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
                                               userData: state.userData,
                                               nombreLeccion:
                                                   leccionesLista[index]
-                                                      .lessonTitle));
+                                                      .lessonTitle,
+                                              datosMaestro:
+                                                  state.datosMaestro));
                                     },
                                   ),
                                 );
@@ -160,7 +383,7 @@ class _CourseDetailPageState extends State<CourseDetailPage> {
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 17, 68, 145),
             ),
-            body: const Text('ESTAS EN CURSOS'),
+            //body: const Text('ESTAS EN CURSOS'),
           );
         }
       },

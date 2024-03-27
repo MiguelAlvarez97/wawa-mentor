@@ -38,6 +38,7 @@ final class InfoLessonRequested extends AuthEvent {
   final List<NivelModel> niveles;
   final String idLesson;
   final String nombreLeccion;
+  final UserModel datosMaestro;
 
   InfoLessonRequested(
       {required this.curso,
@@ -47,7 +48,8 @@ final class InfoLessonRequested extends AuthEvent {
       required this.userData,
       required this.niveles,
       required this.idLesson,
-      required this.nombreLeccion});
+      required this.nombreLeccion,
+      required this.datosMaestro});
 
   //////////////////////
 }
@@ -70,6 +72,7 @@ final class PopCurso extends AuthEvent {
   final List<CursosModel> cursos;
   final UserModel userData;
   final List<NivelModel> niveles;
+  final UserModel datosMaestro;
 
   PopCurso(
       {required this.curso,
@@ -77,5 +80,6 @@ final class PopCurso extends AuthEvent {
       required this.lecciones,
       required this.cursos,
       required this.userData,
-      required this.niveles});
+      required this.niveles,
+      required this.datosMaestro});
 }

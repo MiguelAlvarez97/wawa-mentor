@@ -11,14 +11,6 @@ class Actividades extends StatefulWidget {
 }
 
 class _ActividadesState extends State<Actividades> {
-  Future<void> _abrirUrl() async {
-    final url = Uri.parse(
-        'https://music.youtube.com/watch?v=Xf8XfGbre1g&si=E4ZL-2QggGW3veLm');
-    if (!await launchUrl(url)) {
-      throw Exception('No se pudo abrir $url');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
@@ -41,7 +33,8 @@ class _ActividadesState extends State<Actividades> {
                       lecciones: state.lecciones,
                       cursos: state.cursos,
                       userData: state.userData,
-                      niveles: state.niveles));
+                      niveles: state.niveles,
+                      datosMaestro: state.datosMaestro));
                   Navigator.popAndPushNamed(context, '/CursoPage');
                 },
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -92,7 +85,7 @@ class _ActividadesState extends State<Actividades> {
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 17, 68, 145),
           ),
-          body: const Text('ESTAS EN ACTIVIDADES'),
+          //body: const Text('ESTAS EN ACTIVIDADES'),
         );
       },
       listener: (context, state) {
